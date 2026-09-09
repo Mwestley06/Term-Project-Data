@@ -1,0 +1,47 @@
+ ER Diagram Structure (Text Version)
+
+This file describes the entities and relationships used in the Game Stats Manager project.
+
+## Entities
+
+1. Team
+- TeamID
+- TeamName
+
+2. Player
+- PlayerID
+- PlayerName
+- TeamID (FK → Team.TeamID)
+
+3. Match
+- MatchID
+- MatchDate
+- Opponent
+- Result
+- TeamID (FK → Team.TeamID)
+
+4. Stats
+- StatID
+- PlayerID (FK → Player.PlayerID)
+- MatchID (FK → Match.MatchID)
+- PointsScored
+- Assists
+- Rebounds
+
+## Relationships
+
+- A Team has many Players
+- A Team has many Matches
+- A Player has many Stats records
+- A Match has many Stats records
+
+## Diagram Layout (Text Form)
+
+Team 1 --- ∞ Player
+Team 1 --- ∞ Match
+Player 1 --- ∞ Stats
+Match 1 --- ∞ Stats
+
+## Summary
+
+This ER diagram models how players, teams, matches, and stats connect in a relational database. It supports tracking player performance across multiple games.
