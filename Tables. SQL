@@ -1,0 +1,31 @@
+CREATE TABLE Team (
+TeamID INT PRIMARY KEY,
+TeamName VARCHAR(50)
+);
+
+CREATE TABLE Player (
+PlayerID INT PRIMARY KEY,
+PlayerName VARCHAR(50),
+TeamID INT,
+FOREIGN KEY (TeamID) REFERENCES Team(TeamID)
+);
+
+CREATE TABLE Match (
+MatchID INT PRIMARY KEY,
+MatchDate DATE,
+Opponent VARCHAR(50),
+Result VARCHAR(10),
+TeamID INT,
+FOREIGN KEY (TeamID) REFERENCES Team(TeamID)
+);
+
+CREATE TABLE Stats (
+StatID INT PRIMARY KEY,
+PlayerID INT,
+MatchID INT,
+PointsScored INT,
+Assists INT,
+Rebounds INT,
+FOREIGN KEY (PlayerID) REFERENCES Player(PlayerID),
+FOREIGN KEY (MatchID) REFERENCES Match(MatchID)
+);
