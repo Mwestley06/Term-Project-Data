@@ -1,31 +1,87 @@
-CREATE TABLE Team (
-TeamID INT PRIMARY KEY,
-TeamName VARCHAR(50)
+create table team
+(
+    teamid     integer not null
+        constraint teamid
+            primary key,
+    teamname   varchar,
+    city       varchar,
+    conference varchar,
+    division   varchar,
+    arena      varchar
 );
 
-CREATE TABLE Player (
-PlayerID INT PRIMARY KEY,
-PlayerName VARCHAR(50),
-TeamID INT,
-FOREIGN KEY (TeamID) REFERENCES Team(TeamID)
+alter table team
+    owner to postgres;
+
+create table players
+(
+    playerid   integer not null
+        constraint playerid
+            primary key,
+    playername varchar,
+    teamid     integer
+        constraint "Teams.TeamID"
+            references team,
+    height     varchar,
+    weight     integer,
+    position   varchar
 );
 
-CREATE TABLE Match (
-MatchID INT PRIMARY KEY,
-MatchDate DATE,
-Opponent VARCHAR(50),
-Result VARCHAR(10),
-TeamID INT,
-FOREIGN KEY (TeamID) REFERENCES Team(TeamID)
+alter table players
+    owner to postgres;
+
+create table season
+(
+    seasonid   integer not null
+        constraint seasonid
+            primary key,
+    seasonyear varchar,
+    startdate  date,
+    enddate    date
 );
 
-CREATE TABLE Stats (
-StatID INT PRIMARY KEY,
-PlayerID INT,
-MatchID INT,
-PointsScored INT,
-Assists INT,
-Rebounds INT,
-FOREIGN KEY (PlayerID) REFERENCES Player(PlayerID),
-FOREIGN KEY (MatchID) REFERENCES Match(MatchID)
+alter table season
+    owner to postgres;
+
+create table games
+(
+    gameid       integer not null
+        constraint gameid
+            primary key,
+    matchdate    date,
+    opposingteam varchar,
+    result       varchar,
+    seasonid     integer
+        constraint seasonid_games
+            references season
 );
+
+alter table games
+    owner to postgres;
+
+create table playerstats
+(
+    playerid   integer
+        constraint "Players.PlayerID"
+            references players,
+    gameid     integer
+        constraint "Games.GamesID"
+            references games,
+    stattypeid integer,
+    statvalue  integer
+);
+
+alter table playerstats
+    owner to postgres;
+
+create table statstype
+(
+    stattypeid integer,
+    statname   varchar
+);
+
+alter table statstype
+    owner to postgres;
+
+
+
